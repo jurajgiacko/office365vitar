@@ -1,0 +1,6 @@
+# Source documents (not needed for web)
+*.docx
+*.txt
+
+# OS files
+.DS_Store
