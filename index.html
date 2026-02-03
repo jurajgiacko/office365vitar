@@ -50,9 +50,18 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .nav-links {
@@ -80,7 +89,8 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, rgba(0,120,212,0.9) 0%, rgba(92,45,145,0.9) 100%), 
+                        url('assets/hero-team.jpg') center/cover no-repeat;
             color: white;
             padding: 150px 0 100px;
             text-align: center;
@@ -518,17 +528,137 @@
             font-size: 1.1rem;
         }
 
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .info-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .info-card p {
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .info-detail {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Practical Images */
+        .practical-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .practical-image-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .practical-image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .practical-image-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 20px;
+        }
+
+        .practical-image-card h4 {
+            margin-bottom: 5px;
+        }
+
+        .practical-image-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
         /* Footer */
         footer {
             background: #1a1a1a;
             color: #888;
-            padding: 40px 0;
-            text-align: center;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .footer-section p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
         footer a {
             color: var(--accent);
             text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            height: 40px;
+            opacity: 0.7;
         }
 
         /* Responsive */
@@ -611,10 +741,14 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">VITAR</div>
+            <a href="#" class="logo">
+                <img src="assets/vitar-logo.png" alt="VITAR logo">
+                <span>Přechod na M365</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="#apps">Aplikace</a></li>
                 <li><a href="#benefits">Výhody</a></li>
+                <li><a href="#info">Informace</a></li>
                 <li><a href="#timeline">Harmonogram</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">Kontakt</a></li>
@@ -758,6 +892,60 @@
                             <li>Plánovač najde volný čas</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Practical Images -->
+            <div class="practical-images">
+                <div class="practical-image-card">
+                    <img src="assets/teams-call.jpg" alt="Teams videohovor">
+                    <div class="overlay">
+                        <h4>Teams videohovory</h4>
+                        <p>Jednoduché připojení odkudkoli</p>
+                    </div>
+                </div>
+                <div class="practical-image-card">
+                    <img src="assets/outlook-work.jpg" alt="Práce s Outlookem">
+                    <div class="overlay">
+                        <h4>Moderní Outlook</h4>
+                        <p>Lepší vyhledávání a organizace</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kde najdete informace Section -->
+    <section id="info">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kde najdete informace</h2>
+                <p>Veškeré informace, návody a novinky na jednom místě</p>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🏠</div>
+                    <h3>Intranetový hub</h3>
+                    <p>Vše na jednom místě</p>
+                    <span class="info-detail">Tato stránka s kompletními informacemi o přechodu</span>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📰</div>
+                    <h3>Blog</h3>
+                    <p>Aktuality a novinky</p>
+                    <span class="info-detail">Pravidelné aktualizace o průběhu přechodu</span>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎓</div>
+                    <h3>Vzdělávání</h3>
+                    <p>Návody a videa</p>
+                    <span class="info-detail">Praktické návody a vzdělávací materiály</span>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💬</div>
+                    <h3>Teams kanál</h3>
+                    <p>#microsoft-365-prechod</p>
+                    <span class="info-detail">Praktické návody a školení</span>
                 </div>
             </div>
         </div>
@@ -1936,8 +2124,30 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2026 VITAR • Přechod na Microsoft 365</p>
-            <p>Verze 3.0 • 30. ledna 2026</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Kontakt a podpora</h4>
+                    <p>E-mail: <a href="mailto:365@vitar.cz">365@vitar.cz</a></p>
+                    <p>Teams kanál: #microsoft-365-prechod</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Harmonogram</h4>
+                    <p>Příprava: říjen–prosinec 2025</p>
+                    <p>Přechod: leden–únor 2026</p>
+                    <p>Stabilizace: březen–červen 2026</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Kde najdete informace</h4>
+                    <p>Intranetový hub</p>
+                    <p>E-mailový newsletter</p>
+                    <p>Teams kanál</p>
+                    <p>Školení a videa</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <img src="assets/vitar-logo.png" alt="VITAR" class="footer-logo">
+                <p>© 2026 VITAR • Přechod na Microsoft 365 • Verze 3.0</p>
+            </div>
         </div>
     </footer>
 
