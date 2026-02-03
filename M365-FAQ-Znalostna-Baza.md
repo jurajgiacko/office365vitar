@@ -147,6 +147,11 @@ Teams je "centrální pracovní prostředí" (hub) pro Microsoft 365. Cílem je,
 - Automaticky zařazeni všichni uživatelé
 - Použití: firemní oznámení, směrnice, obecné informace
 
+**Plánované celofiremní kanály (postupně):**
+- Produktové novinky a vývoj
+- Interní komunikace (oznámení na úrovni HR/vedení)
+- Informační kanál propojující všechny firmy ve skupině VITAR
+
 ### 4.4 Členové týmu a role
 
 **Vlastník týmu**
@@ -187,23 +192,44 @@ Teams je "centrální pracovní prostředí" (hub) pro Microsoft 365. Cílem je,
 
 ### 4.7 Příspěvky v kanálech
 
-- **Oznámení** - výrazný nadpis, podnadpis, obrázek na pozadí
+**Jak vytvořit příspěvek:**
+1. Otevřete kanál
+2. Klikněte na "Nový příspěvek" nebo do textového pole
+3. Napište text, můžete formátovat (tučně, odrážky, atd.)
+4. Klikněte na "Publikovat"
+
+**Typy příspěvků:**
+- **Běžný příspěvek** - standardní zpráva
+- **Oznámení** - výrazný nadpis, podnadpis, obrázek na pozadí (pro důležité zprávy)
 - **Cross-post** - zveřejnit ve více kanálech naráz
+
+**Práce s příspěvky:**
 - **Připnutí** - důležitý příspěvek nahoře
 - **Reakce** - palec nahoru jako potvrzení "viděl jsem"
+- **Odpověď ve vlákně** - udržuje diskusi přehlednou
 - **Uložení** - do "Uložených zpráv"
+- **Úprava** - kliknutí na 3 tečky → Upravit (pokud jste autor)
+
+**TIP:** Když kanál zčervená nebo ztmavne, znamená to novou aktivitu - někdo přidal příspěvek nebo reagoval.
 
 ### 4.8 Online schůzky v Teams
 
+**Jak zahájit hovor:**
+1. **Z chatu:** Nahoře v okně chatu klikněte na ikonu kamery (videohovor) nebo telefonu (hlasový hovor)
+2. **Z kalendáře:** Naplánovaná schůzka → tlačítko "Připojit se"
+3. **Z profilu osoby:** Kliknutí na jméno → ikona hovoru
+
 **Základní ovládání:**
 - Ukončení schůzky - organizátor může ukončit pro všechny
-- Sdílení obrazovky - celá obrazovka nebo konkrétní okno
+- Sdílení obrazovky - celá obrazovka nebo konkrétní okno (ikona vedle mikrofonu)
 - Whiteboard - sdílená bílá tabule
 - PowerPoint Live - prezentace přímo v Teams
 
 **Nastavení zvuku a videa:**
 - Výběr mikrofonu, reproduktorů, kamery
 - Rozmazané nebo obrázkové pozadí
+
+**TIP:** Nemusíte vždy zapínat kameru. Hlasový hovor stačí pro rychlou konzultaci.
 
 ### 4.9 Nahrávání a přepis schůzek
 
@@ -245,7 +271,16 @@ Teams je "centrální pracovní prostředí" (hub) pro Microsoft 365. Cílem je,
 
 Status se automaticky synchronizuje s kalendářem.
 
-### 4.13 Urgentní mód
+**TIP:** Pokud kolegu sháníte a vidíte, že je na schůzce nebo prezentuje, nemá smysl ho rušit - počkejte nebo napište do chatu.
+
+### 4.13 Blokování notifikací na mobilu
+
+Pokud máte Teams na počítači i mobilu a nechcete, aby vám zvonil telefon, když jste aktivní na PC:
+1. V mobilní aplikaci Teams → Nastavení → Oznámení
+2. Zapněte "Blokovat při aktivním stavu u počítače"
+3. Notifikace přijdou jen na mobil, když nejste aktivní na PC
+
+### 4.14 Urgentní mód
 
 - Pro urgentní zprávy označte zprávu jako "důležitou"
 - Urgent mód posílá notifikace každé 2 minuty po dobu 20 minut
@@ -452,9 +487,36 @@ V Teams je aplikace Schvalování:
 - **Outlook Classic** - starší vzhled, postupně bude ukončován
 - **Nový Outlook** - moderní vzhled, podobný webové verzi
 
+**DŮLEŽITÉ pro přechodné období (únor 2026):**
+- V přechodném období používáme **Outlook Classic** (stabilnější pro migraci)
+- Pokud máte na počítači oba Outloky, vyberte ten s označením "Classic"
+- Outlook Classic najdete přes vyhledávání: napište "Outlook" a vyberte verzi Classic
+- Nový Outlook přijde později po ustálení prostředí
+
 **DOPORUČENÍ:** Přejít na nový Outlook, budoucí rozvoj směřuje tam.
 
-### 10.3 Typy schránek
+### 10.3 Mail Store (přechodné období)
+
+**Co je Mail Store?**
+- Dočasná schránka s archivem vaší pošty z M-clientu
+- Dostupná **pouze ke čtení** (read-only)
+- Vidíte ji jako záložku v Outlooku
+
+**Kdy Mail Store používáte:**
+- Od středy (přepnutí) do neděle
+- Slouží pro přístup k historické poště během migrace
+
+**Od pondělí:**
+- Obsah Mail Storu se přesune do vaší běžné struktury složek
+- Nebude potřeba klikat na záložku Mail Store
+- Vše najdete ve standardní Doručené poště
+
+**DŮLEŽITÉ:** 
+- V přechodném období (středa-neděle) může pošta přicházet na různá místa
+- Od čtvrtka rána by vše mělo chodit do nového inboxu
+- Migrace probíhá na pozadí, buďte trpěliví
+
+### 10.4 Typy schránek
 
 **Osobní schránka**
 - Standardní firemní email zaměstnance
@@ -584,9 +646,12 @@ Při velkých schránkách může být rychlejší přes webovou verzi.
 - Vytváření vlastních kontaktů
 - Outlook automaticky našeptává podle historie
 
-**Org Explorer:**
-- Organizační struktura (kdo je nadřízený koho)
-- Funguje pokud má IT správně vyplněné vazby
+**Org Explorer (Organizační struktura):**
+- Najdete v Outlooku v záložce "Lidé" nebo přímo v kontaktech
+- Zobrazuje hierarchii: nadřízení a podřízení
+- Kliknutím na osobu vidíte její pozici ve struktuře
+- Užitečné pro nové kolegy - rychle zjistíte, kam kdo patří
+- Časem budou doplněny i fotky zaměstnanců
 
 ---
 
@@ -609,6 +674,18 @@ Kalendář Outlooku je plně propojený s kalendářem v Teams - schůzky se zob
 **Hlasování (Scheduling Poll)**
 - Více termínů k výběru
 - Účastníci hlasují
+
+### 11.3 Pracovní lokace v kalendáři
+
+V kalendáři můžete nastavit, odkud pracujete:
+1. Klikněte na den v kalendáři
+2. Zvolte ikonu domečku nebo kanceláře
+3. Vyberte "Kancelář" nebo "Vzdáleně"
+
+**Přínosy:**
+- Kolegové vidí, zda jste v kanceláři nebo na home office
+- Pomáhá při plánování osobních schůzek
+- Informace se zobrazuje ostatním v kalendáři
 
 ### 11.3 Vytvoření schůzky
 
@@ -662,6 +739,18 @@ Organizátor může nastavit:
 - Sdílené schránky (info@, reklamace@)
 - Kalendáře skupin/týmů
 - Kalendáře místností a zdrojů (zasedačky, auta)
+
+### 11.9 Delegování přístupu ke kalendáři
+
+Můžete povolit kolegovi (např. asistentce) vkládat schůzky do vašeho kalendáře:
+1. Otevřete svůj kalendář
+2. Pravé tlačítko → Sdílení → Oprávnění
+3. Přidejte osobu a nastavte úroveň "Může upravovat"
+4. Tato osoba pak může plánovat schůzky za vás
+
+**Příklad využití:**
+- Asistentka plánuje schůzky vedoucímu
+- HR plánuje pohovory kandidátům do kalendářů kolegů
 
 ---
 
@@ -725,6 +814,20 @@ Ne, pravidla je třeba nastavit znovu v Outlooku.
 **Přenese se můj kalendář?**
 Ano, ale opakující se události je třeba založit znovu.
 
+**Co s kontakty a kalendářem na mobilním telefonu?**
+- Kontakty a kalendář na mobilu se **nepřenesou automaticky**
+- IT oddělení vás bude kontaktovat ohledně ručního nastavení
+- Návod na instalaci Outlooku do mobilu je na intranetu v sekci M365
+
+**Nechodí mi pošta na mobil po přechodu?**
+- V přechodném období (středa-neděle) může být nestabilita
+- Od pondělí by vše mělo fungovat normálně
+- Pokud problém přetrvává, kontaktujte IT oddělení
+
+**Co když vytvořím událost v kalendáři během přechodu (pondělí-středa)?**
+- Události vytvořené v tomto období je nutné po přepnutí vytvořit znovu
+- Kontakty se bohužiaľ nepřenesou, je třeba je přidat ručně
+
 ### Teams a soubory
 
 **Kdo uvidí moje dokumenty?**
@@ -754,10 +857,19 @@ Ne, zůstává zachována.
 
 ### Kde hledat pomoc
 
-1. **Intranet:** Sekce M365 - návody, záznamy, FAQ
-2. **Email:** 365@vitar.cz
-3. **Ambasadoři:** Kolegové z vašeho oddělení vyškolení na M365
-4. **IT oddělení:** Pro technické problémy
+1. **Intranet:** Sekce M365 - návody, záznamy, FAQ, testy
+2. **ChatGPT asistent:** Na intranetu v sekci M365 - odpovídá na dotazy k M365
+3. **Email:** 365@vitar.cz
+4. **Ambasadoři:** Kolegové z vašeho oddělení vyškolení na M365
+5. **IT oddělení:** Pro technické problémy
+
+### Kde najdu návody a testy
+
+Na intranetu v sekci M365:
+- **Vzdělávání:** Záznamy ze živých vysílání
+- **Testy:** Ověření znalostí Teams a Outlooku
+- **Návody:** Instalace Outlooku do mobilu a další postupy
+- **ChatGPT asistent:** AI pomocník pro dotazy k M365
 
 ---
 
@@ -772,10 +884,18 @@ Ne, zůstává zachována.
 - Přesun důležitých souborů do nové struktury (do 23.1.)
 
 ### Únor 2026
-- **4. února:** Spuštění M365 (bod zlomu)
-- **4. února 10:00-11:00:** Mimořádné živé vysílání
-- Pilotní provoz
+- **Středa 5. února od 15:00:** Začátek přepínání (bod zlomu)
+- **Středa 5. února 10:00-11:00:** Mimořádné živé vysílání - poslední možnost dotazů
+- **Středa - Neděle:** Přechodné období s Mail Storem
+- **Od pondělí:** Plný provoz v novém Outlooku
+- Pilotní provoz (únor)
 - M-client přechází do režimu "pouze ke čtení"
+
+### Důležité časové pokyny pro den přechodu (středa)
+- **Do 14:45:** Dokončit všechny klíčové aktivity v M-clientu
+- **Od 15:00:** Začíná přepínání - nestabilita služeb
+- **Během noci:** Migrace dat probíhá na pozadí
+- **Čtvrtek ráno:** Vše by mělo fungovat v novém prostředí
 
 ### Co funguje v pilotní fázi
 - ✅ Teams - hovory, chat, schůzky
@@ -798,6 +918,6 @@ Ne, zůstává zachována.
 
 ---
 
-*Dokument vytvořen na základě živých vysílání M365 (leden 2026) a externích školení (prosinec 2025)*
+*Dokument vytvořen na základě živých vysílání M365 (díly 1-4, leden 2026) a externích školení (prosinec 2025)*
 *Lektor externích školení: Jirka Blažek*
-*Verze: 2.0 | Poslední aktualizace: Leden 2026*
+*Verze: 3.0 | Poslední aktualizace: 30. ledna 2026*
