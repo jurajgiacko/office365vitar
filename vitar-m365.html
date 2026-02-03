@@ -557,6 +557,54 @@
         .hidden {
             display: none !important;
         }
+
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .example-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .example-before, .example-after {
+            padding: 25px;
+        }
+
+        .example-before {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .example-after {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+        }
+
+        .example-before h4, .example-after h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .example-before ul, .example-after ul {
+            margin: 10px 0 0 20px;
+            color: var(--text-light);
+        }
+
+        .example-before li, .example-after li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 500px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -659,6 +707,57 @@
                 <div class="benefit-card">
                     <h3>🎯 Méně duplicitních nástrojů</h3>
                     <p>Jedna platforma napříč firmou – včetně společností ve skupině.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Praktické příklady -->
+    <section id="examples">
+        <div class="container">
+            <div class="section-title">
+                <h2>Praktické příklady</h2>
+                <p>Jak se změní vaše každodenní práce</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-before">
+                        <h4>❌ Dříve</h4>
+                        <p>Posílal jsem Excel 5 lidem emailem a řešil verze</p>
+                        <ul>
+                            <li>Více verzí souboru</li>
+                            <li>Ztráta přehledu</li>
+                            <li>Složité slučování změn</li>
+                        </ul>
+                    </div>
+                    <div class="example-after">
+                        <h4>✅ Nově</h4>
+                        <p>Uložím soubor do týmové složky a pošlu odkaz</p>
+                        <ul>
+                            <li>Jedna aktuální verze</li>
+                            <li>Vidím, kdo co změnil</li>
+                            <li>Automatické ukládání</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-before">
+                        <h4>❌ Dříve</h4>
+                        <p>Hledal jsem kolegu, volal, psal SMS</p>
+                        <ul>
+                            <li>Nevěděl jsem, jestli je k dispozici</li>
+                            <li>Složité domlouvání schůzek</li>
+                        </ul>
+                    </div>
+                    <div class="example-after">
+                        <h4>✅ Nově</h4>
+                        <p>Vidím status v Teams, napíšu nebo zavolám jedním klikem</p>
+                        <ul>
+                            <li>Zelená = k dispozici</li>
+                            <li>Červená = na schůzce</li>
+                            <li>Plánovač najde volný čas</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -936,6 +1035,47 @@
                                 <p>Lokální kopie synchronizovaných souborů se dá upravovat offline. Po připojení se změny synchronizují.</p>
                             </div>
                         </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co znamenají ikony synchronizace?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <table>
+                                    <tr><th>Ikona</th><th>Význam</th></tr>
+                                    <tr><td>☁️ Modrý mráček</td><td>Soubor je jen v cloudu, při otevření se stáhne</td></tr>
+                                    <tr><td>⭕ Prázdné zelené kolečko</td><td>Soubor je dočasně v zařízení, funguje offline</td></tr>
+                                    <tr><td>✅ Plné zelené kolečko</td><td>Trvale stažený, synchronizuje se</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak přestat synchronizovat složku (bez mazání)?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <ol>
+                                    <li>Klikněte na ikonu OneDrive → Nastavení → Účet</li>
+                                    <li>U konkrétní knihovny zvolte "Přestat synchronizovat"</li>
+                                    <li>Teprve potom můžete složku lokálně odstranit</li>
+                                </ol>
+                                <div class="alert alert-warning">
+                                    <strong>⚠️ POZOR:</strong> Pokud jen smažete složku bez přerušení synchronizace, smažete soubory pro celý tým!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak sdílet soubory externě?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>"Lidé s existujícím přístupem"</strong> - odkaz funguje jen pro členy týmu</p>
+                                <p><strong>"Lidé ve vaší organizaci s odkazem"</strong> - kdokoli z firmy může otevřít</p>
+                                <p><strong>"Konkrétní lidé"</strong> - zadat konkrétní uživatele nebo externí emaily, externím přijde email s kódem</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -980,6 +1120,88 @@
                                 </ul>
                                 <div class="alert alert-info">
                                     <strong>💡 Pravidlo:</strong> Firemní/důležité soubory patří do Týmů/Kanálů, ne do Chatu!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jaké jsou typy týmů?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Soukromý tým</strong> (nejčastější):</p>
+                                <ul>
+                                    <li>Přístup jen pro pozvané uživatele</li>
+                                    <li>Tým není vidět v seznamu, dokud nejste přidáni</li>
+                                    <li>Použití: oddělení (IT, marketing), projektové týmy</li>
+                                </ul>
+                                <p><strong>Veřejný tým:</strong></p>
+                                <ul>
+                                    <li>Viditelný v katalogu, kdokoli se může přidat</li>
+                                    <li>Použití: školící materiály, zájmové skupiny</li>
+                                </ul>
+                                <p><strong>Celofiremní tým:</strong></p>
+                                <ul>
+                                    <li>Automaticky zařazeni všichni uživatelé</li>
+                                    <li>Použití: firemní oznámení, směrnice</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jaké jsou typy kanálů?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Standardní kanál:</strong> Přístup pro všechny členy týmu</p>
+                                <p><strong>Soukromý kanál:</strong> Vidí ho jen vybraní členové (mzdy, citlivé HR agendy)</p>
+                                <p><strong>Sdílený kanál:</strong> Může být připojen do více týmů, i s externí organizací</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Kdo jsou Vlastníci a Členové týmu?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Vlastník týmu:</strong></p>
+                                <ul>
+                                    <li>Přidává/odebírá členy a hosty</li>
+                                    <li>Nastavuje oprávnění týmu</li>
+                                    <li>Má přístup ke koši 2. fáze na SharePointu</li>
+                                </ul>
+                                <p><strong>Člen týmu:</strong></p>
+                                <ul>
+                                    <li>Plný přístup k obsahu: čtení, úpravy, vytváření</li>
+                                    <li>Omezené možnosti ve správě týmu</li>
+                                </ul>
+                                <p><strong>Host (externí):</strong></p>
+                                <ul>
+                                    <li>Např. dodavatel, agentura</li>
+                                    <li><strong>POZOR:</strong> Má stejný přístup jako interní člen!</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak vytvořit příspěvek v kanálu?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <ol>
+                                    <li>Otevřete kanál</li>
+                                    <li>Klikněte na "Nový příspěvek"</li>
+                                    <li>Napište text, můžete formátovat</li>
+                                    <li>Klikněte na "Publikovat"</li>
+                                </ol>
+                                <p><strong>Typy příspěvků:</strong></p>
+                                <ul>
+                                    <li>Běžný příspěvek</li>
+                                    <li>Oznámení (výrazný nadpis pro důležité zprávy)</li>
+                                    <li>Cross-post (zveřejnit ve více kanálech)</li>
+                                </ul>
+                                <div class="alert alert-info">
+                                    <strong>💡 TIP:</strong> Když kanál zčervená nebo ztmavne, znamená to novou aktivitu.
                                 </div>
                             </div>
                         </div>
@@ -1095,6 +1317,11 @@
                                 <div class="alert alert-info">
                                     <strong>💡 TIP:</strong> Používejte odkazy místo příloh - šetří kapacitu!
                                 </div>
+                                <p><strong>Doporučení pro úklid:</strong></p>
+                                <ul>
+                                    <li>Průběžný úklid (složky, pravidla, archiv, mazání)</li>
+                                    <li>Velké přílohy přes OneDrive/SharePoint</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="faq-item">
@@ -1113,6 +1340,12 @@
                             </div>
                             <div class="faq-answer">
                                 <p><strong>Ne</strong>, pravidla je třeba nastavit znovu v Outlooku.</p>
+                                <p><strong>Jak fungují pravidla:</strong></p>
+                                <ul>
+                                    <li>Automatické třídění pošty</li>
+                                    <li>Příklad: vše od adresy X → do složky Y</li>
+                                    <li>Pravidla mají pořadí, spouští se shora dolů</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="faq-item">
@@ -1139,6 +1372,67 @@
                             <div class="faq-answer">
                                 <p>Místo psaní "Děkuji, beru na vědomí" můžete použít rychlou reakci (palec nahoru).</p>
                                 <p>Reakce vidí všichni v konverzaci.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co jsou Rychlé kroky?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Spojení více akcí do jednoho tlačítka.</p>
+                                <p><strong>Příklad "Zpracovat poptávku HR":</strong></p>
+                                <ul>
+                                    <li>Přesunout do složky "Poptávky HR"</li>
+                                    <li>Označit příznakem</li>
+                                    <li>Přiřadit kategorii "HR"</li>
+                                    <li>Přeposlat kolegovi</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak označovat zprávy?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Příznak (vlaječka)</strong> - označí zprávu jako "k vyřízení", úkol se objeví v To Do/Tasks</p>
+                                <p><strong>Připnutí (špendlík)</strong> - zpráva je stále nahoře v seznamu</p>
+                                <p><strong>Kategorie (barevné štítky)</strong> - barevné rozlišení (HR, Dodavatelé, VIP), možnost filtrování</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co je Org Explorer (organizační struktura)?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <ul>
+                                    <li>Najdete v Outlooku v záložce "Lidé" nebo v kontaktech</li>
+                                    <li>Zobrazuje hierarchii: nadřízení a podřízení</li>
+                                    <li>Kliknutím na osobu vidíte její pozici ve struktuře</li>
+                                    <li>Užitečné pro nové kolegy - rychle zjistíte, kam kdo patří</li>
+                                    <li>Časem budou doplněny i fotky zaměstnanců</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jaké jsou typy schránek?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Osobní schránka:</strong></p>
+                                <ul>
+                                    <li>Standardní firemní email zaměstnance</li>
+                                    <li>Může mít více aliasů (jmeno.prijmeni@, jmeno@)</li>
+                                </ul>
+                                <p><strong>Sdílené schránky:</strong></p>
+                                <ul>
+                                    <li>info@, sales@, reklamace@</li>
+                                    <li>Více lidí vidí stejnou schránku</li>
+                                    <li>Nemají vlastní licenci</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -1214,6 +1508,277 @@
                     </div>
                 </div>
 
+                <!-- SharePoint pokročilé -->
+                <div class="faq-category" data-category="sharepoint">
+                    <div class="faq-category-header" onclick="toggleCategory(this)">
+                        <h3>📂 SharePoint - pokročilé funkce</h3>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="faq-category-content">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co je SharePoint web týmu?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Každý tým v Teams má svůj SharePoint web obsahující:</p>
+                                <ul>
+                                    <li>Knihovnu dokumentů</li>
+                                    <li>Seznamy (Lists)</li>
+                                    <li>Stránky</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co jsou metadata (sloupce)?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Pro soubory v knihovně SharePointu lze přidat dodatečné sloupce:</p>
+                                <ul>
+                                    <li>Jednořádkový/víceřádkový text</li>
+                                    <li>Volba (předdefinovaný seznam hodnot)</li>
+                                    <li>Datum a čas</li>
+                                    <li>Ano/Ne</li>
+                                    <li>Osoba nebo skupina</li>
+                                </ul>
+                                <p><strong>Příklad HR - životopisy:</strong></p>
+                                <ul>
+                                    <li>"Pohovorující" (Osoba)</li>
+                                    <li>"Datum pohovoru" (Datum)</li>
+                                    <li>"Stav" (Volba: Nový, Pozvat, Odmítnut, Nabídka)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co jsou zobrazení (Views)?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Knihovny umožňují vytvářet různá zobrazení:</p>
+                                <ul>
+                                    <li>Které sloupce se zobrazí</li>
+                                    <li>Filtry a řazení</li>
+                                    <li>Zobrazení bez složek (vše "naplocho")</li>
+                                </ul>
+                                <p><strong>Příklady:</strong></p>
+                                <ul>
+                                    <li>"Všechny dokumenty" - výchozí pohled</li>
+                                    <li>"Pozvat na pohovor" - filtr podle stavu</li>
+                                    <li>"Bez složek" - dokumenty napříč všemi složkami</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Lze nastavit automatizace?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>V knihovně: Automatizovat → Pravidla → Vytvořit pravidlo</p>
+                                <p><strong>Příklady:</strong></p>
+                                <ul>
+                                    <li>"Blíží se datum" - 3 dny před datem přijde email</li>
+                                    <li>"Metadata se změnila" - když se stav změní na "Pozvat", přijde email asistenci</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co jsou Seznamy (Lists)?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Strukturovaná data podobná Excelu, ale se všemi výhodami SharePointu.</p>
+                                <p><strong>Příklad "Helpdesk":</strong></p>
+                                <ul>
+                                    <li>Název problému, priorita, kategorie</li>
+                                    <li>Přiřazená osoba, stav, termín</li>
+                                    <li>Pravidla (email při vytvoření nové položky)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak funguje Koš a ochrana dat?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Smazané soubory končí v koši SharePoint webu:</p>
+                                <ul>
+                                    <li><strong>Fáze 1:</strong> Běžný koš (cca 30 dní)</li>
+                                    <li><strong>Fáze 2:</strong> Koš správce (dalších cca 60 dní)</li>
+                                </ul>
+                                <p>Vlastníci/správci mohou obnovit smazané soubory.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak fungují oprávnění v SharePointu?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Dědičnost:</strong></p>
+                                <ul>
+                                    <li>Tým = SharePoint web s oprávněními</li>
+                                    <li>Knihovna dědí z webu</li>
+                                    <li>Složky a soubory dědí z knihovny</li>
+                                </ul>
+                                <p><strong>Správa přístupu:</strong></p>
+                                <ul>
+                                    <li>Přerušit dědičnost</li>
+                                    <li>Změnit oprávnění skupiny (Upravit → Pouze čtení)</li>
+                                    <li>Přidat individuální přístupy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Planner a úkoly -->
+                <div class="faq-category" data-category="planner">
+                    <div class="faq-category-header" onclick="toggleCategory(this)">
+                        <h3>📋 Planner a úkoly</h3>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="faq-category-content">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co je Planner?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Do kanálu v Teams lze přidat kartu Planner:</p>
+                                <ul>
+                                    <li>Úkoly se organizují do kbelíků (buckets)</li>
+                                    <li>Podle projektů, fází, oblastí</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co může obsahovat úkol?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <ul>
+                                    <li>Přiřazené osoby (1 nebo více)</li>
+                                    <li>Datum zahájení a termín splnění</li>
+                                    <li>Kontrolní seznam (sub-úkoly)</li>
+                                    <li>Přílohy (raději z knihoven týmů, ne z lokálního PC)</li>
+                                    <li>Komentáře a historie změn</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jaká jsou zobrazení v Planneru?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p><strong>Týmový pohled:</strong></p>
+                                <ul>
+                                    <li>Plán s kbelíky</li>
+                                    <li>Kalendář</li>
+                                    <li>Grafy (zpožděné úkoly, podle osob, podle stavu)</li>
+                                </ul>
+                                <p><strong>Osobní pohled (Tasks/To Do):</strong></p>
+                                <ul>
+                                    <li>Soukromé úkoly</li>
+                                    <li>Úkoly z emailů označených vlaječkou</li>
+                                    <li>Úkoly z Planneru kde jste přiřazeni</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schvalování -->
+                <div class="faq-category" data-category="approvals">
+                    <div class="faq-category-header" onclick="toggleCategory(this)">
+                        <h3>✅ Schvalovací procesy</h3>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="faq-category-content">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co je aplikace Schvalování?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>V Teams je aplikace Schvalování (Approvals):</p>
+                                <ul>
+                                    <li>Jednoduché schvalovací workflow přímo z Teams</li>
+                                    <li>Příklad: žádost o dárek pro zákazníka, schválení home office</li>
+                                </ul>
+                                <p><strong>Šablony:</strong></p>
+                                <ul>
+                                    <li>Definice polí (žadatel, částka, důvod, schvalovatel)</li>
+                                    <li>Volitelná příloha</li>
+                                </ul>
+                                <p><strong>Přehled:</strong></p>
+                                <ul>
+                                    <li>"Ke schválení" - co čeká na vás</li>
+                                    <li>"Odeslané" - co jste odeslali (včetně stavu)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copilot -->
+                <div class="faq-category" data-category="copilot">
+                    <div class="faq-category-header" onclick="toggleCategory(this)">
+                        <h3>🤖 Copilot (AI asistent)</h3>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="faq-category-content">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co je Copilot?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Umělá inteligence integrovaná do M365 aplikací.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co Copilot umí?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <ul>
+                                    <li><strong>Outlook:</strong> Shrnutí dlouhých emailů, návrhy odpovědí</li>
+                                    <li><strong>Word:</strong> Návrh draftu textu</li>
+                                    <li><strong>Excel:</strong> Analýza tabulek, vytváření vzorců, vizualizace dat</li>
+                                    <li><strong>Teams:</strong> Zápis ze schůzky, shrnutí diskuse</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Na co si dát pozor u Copilotu?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="alert alert-warning">
+                                    <strong>⚠️ DŮLEŽITÉ:</strong> Nutná kontrola textu vygenerovaného AI, aby nedošlo ke zkreslení!
+                                </div>
+                                <p>Když organizace začne využívat Copilot, AI bude pracovat se všemi daty, ke kterým máte přístup.</p>
+                                <p><strong>Z toho vyplývá:</strong></p>
+                                <ul>
+                                    <li>Potřeba promyšlené struktury týmů a kanálů</li>
+                                    <li>Průběžné čištění nepotřebných týmů a přístupů</li>
+                                    <li>Nezakládat zbytečné testovací týmy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Podpora -->
                 <div class="faq-category" data-category="podpora">
                     <div class="faq-category-header" onclick="toggleCategory(this)">
@@ -1244,6 +1809,69 @@
                             </div>
                             <div class="faq-answer">
                                 <p>Může otevřít sdílený dokument přes prohlížeč bez vlastního účtu.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co se stane s M-clientem?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>M-client přejde do režimu "pouze ke čtení". Budete mít přístup k archívu.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co s OnCloud?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>OnCloud zanikne, nahradí ho SharePoint.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co se stane s mojí plochou?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Plocha zůstává. Pokud máte zástupce na soubor ve sdílené složce, který se přesune, změní se cesta k němu.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Jak dlouho se uchovávají verze dokumentů?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Minimálně 12 měsíců, možná i 2 roky.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Mohu dohledat staré konverzace v Teams?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ano, historie je neomezená.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Co se stane se soubory v Citrixu?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Přenos proběhne stejně. V tabletech bude přístup přímo přes aplikace.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(this)">
+                                <h4>Změní se EDI komunikace?</h4>
+                                <span class="arrow">▶</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Ne, zůstává zachována.</p>
                             </div>
                         </div>
                     </div>
