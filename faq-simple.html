@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VITAR implementace Office365</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .section-header .icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .section-header.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 0;
+        }
+
+        .section-content.show {
+            display: block;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #edf2f7;
+        }
+
+        .faq-question h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2d3748;
+            flex: 1;
+            padding-right: 15px;
+        }
+
+        .faq-question .arrow {
+            color: #667eea;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 20px 25px;
+            background: white;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        .faq-answer.show {
+            display: block;
+        }
+
+        .faq-answer ul, .faq-answer ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        .faq-answer li {
+            margin-bottom: 8px;
+        }
+
+        .faq-answer strong {
+            color: #2d3748;
+        }
+
+        .faq-answer code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #667eea;
+        }
+
+        .faq-answer table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .faq-answer th, .faq-answer td {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .faq-answer th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 15px;
+            border-left: 4px solid #f59e0b;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip {
+            background: #d1fae5;
+            padding: 15px;
+            border-left: 4px solid #10b981;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-header h2 {
+                font-size: 1rem;
+            }
+
+            .faq-question h3 {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏢 VITAR implementace Office365</h1>
+            <p>Znalostní báze pro zaměstnance</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Hledat v FAQ..." onkeyup="searchFAQ()">
+            </div>
+        </header>
+
+        <!-- Sekce 1: Základní informace -->
+        <div class="faq-section" data-section="zakladni">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📋 Základní informace o M365</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je Microsoft 365?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Microsoft 365 je moderní sada pracovních nástrojů od společnosti Microsoft, které využíváme ke komunikaci a spolupráci. Celé prostředí běží v cloudu.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je cloud?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Cloud si můžete představit jako bezpečný trezor uložený v zahraničí (datacentra v EU), ke kterému se dostanete prostřednictvím internetu.</p>
+                        <p><strong>Výhody cloudu:</strong></p>
+                        <ul>
+                            <li>Data jsou dostupná odkudkoli (web, desktop, mobil)</li>
+                            <li>Průběžné zálohování a správa Microsoftem</li>
+                            <li>Nezatěžuje se disk uživatele velkými lokálními soubory</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Proč přecházíme na M365?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><strong>Rychlejší spolupráce</strong> - méně posílání příloh, více společné práce na dokumentech</li>
+                            <li><strong>Bezpečnější práce</strong> - data jsou v cloudu, ne na lokálních discích</li>
+                            <li><strong>Moderní technologie</strong> - jednotný digitální standard v celé skupině VITAR</li>
+                            <li><strong>Méně chaosu</strong> - všechny nástroje jsou propojené a komunikují spolu</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jaké aplikace se mění?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <table>
+                            <tr><th>Účel</th><th>Původní</th><th>Nová</th></tr>
+                            <tr><td>E-mail</td><td>M-client</td><td>Outlook</td></tr>
+                            <tr><td>Chat a hovory</td><td>IceWarp</td><td>Teams</td></tr>
+                            <tr><td>Soubory</td><td>Lokální disky</td><td>SharePoint/OneDrive</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 2: Přístup k aplikacím -->
+        <div class="faq-section" data-section="pristup">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🔐 Přístup k aplikacím</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak se dostanu k M365?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>3 způsoby přístupu:</strong></p>
+                        <ol>
+                            <li><strong>Desktopové aplikace</strong> - Teams, Outlook, Word, Excel nainstalované na PC</li>
+                            <li><strong>Web</strong> - přes <code>www.office.com</code> v prohlížeči</li>
+                            <li><strong>Mobil</strong> - aplikace Teams, Outlook na telefonu/tabletu</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Potřebuji VPN?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ne.</strong> VPN není potřeba pro přístup k M365 aplikacím. Přihlášení funguje standardně přes internet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 3: OneDrive vs SharePoint -->
+        <div class="faq-section" data-section="uloziste">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📁 OneDrive vs. SharePoint</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jaký je rozdíl mezi OneDrive a SharePoint?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <table>
+                            <tr><th>OneDrive</th><th>SharePoint (Týmy)</th></tr>
+                            <tr><td>Osobní úložiště</td><td>Týmové úložiště</td></tr>
+                            <tr><td>Pro rozpracované materiály</td><td>Pro dokumenty důležité pro více lidí</td></tr>
+                            <tr><td>Vázané na váš účet</td><td>Zůstává i po odchodu lidí</td></tr>
+                        </table>
+                        <div class="highlight">
+                            <strong>⚠️ DŮLEŽITÉ:</strong> Pokud uložíte firemní dokument jen na OneDrive a odejdete z firmy, dokument může být ztracen!
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Kam ukládat soubory?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><strong>Osobní práce</strong> → začít na OneDrive</li>
+                            <li><strong>Finální a týmové dokumenty</strong> → přesunout na SharePoint (do týmu v Teams)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak synchronizovat soubory do počítače?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Doporučeno:</strong> Použít tlačítko <strong>"Synchronizovat"</strong> (ne "Přidat zástupce na OneDrive")</p>
+                        <ul>
+                            <li>Synchronizuje přímo do Průzkumníka</li>
+                            <li>Synchronizovat jen složky, se kterými aktivně pracujete</li>
+                            <li>Limit: max cca 100 000 souborů</li>
+                        </ul>
+                        <div class="highlight">
+                            <strong>⚠️ POZOR:</strong> Pokud smažete soubor v synchronizované složce, smažete ho pro celý tým!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 4: Microsoft Teams -->
+        <div class="faq-section" data-section="teams">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>💬 Microsoft Teams</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je Teams?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Teams je "centrální pracovní prostředí" pro Microsoft 365. Můžete v něm:</p>
+                        <ul>
+                            <li>Psát zprávy (chat)</li>
+                            <li>Volat a mít videoschůzky</li>
+                            <li>Pracovat na týmových dokumentech</li>
+                            <li>Přistupovat ke kalendáři</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jaký je rozdíl mezi Chatem a Týmy/Kanály?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Chat:</strong></p>
+                        <ul>
+                            <li>Rychlá komunikace mezi jednotlivci</li>
+                            <li>Soubory se ukládají na OneDrive (riziko ztráty!)</li>
+                        </ul>
+                        <p><strong>Týmy a Kanály:</strong></p>
+                        <ul>
+                            <li>Strukturované konverzace k tématu</li>
+                            <li>Soubory se ukládají na SharePoint (bezpečné)</li>
+                            <li>Historie se zachovává i pro nové kolegy</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 Pravidlo:</strong> Firemní/důležité soubory patří do Týmů/Kanálů, ne do Chatu!
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak fungují zmínky (@)?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><code>@jméno</code> - osloví konkrétní osobu</li>
+                            <li><code>@název týmu</code> - upozorní všechny členy</li>
+                            <li><code>@název kanálu</code> - upozorní všechny v kanálu</li>
+                        </ul>
+                        <p>Zmíněná osoba dostane notifikaci.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co znamenají barvy statusu?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <table>
+                            <tr><th>Barva</th><th>Význam</th></tr>
+                            <tr><td>🟢 Zelená</td><td>K dispozici</td></tr>
+                            <tr><td>🔴 Červená</td><td>Nemá čas (na schůzce)</td></tr>
+                            <tr><td>🟠 Oranžová</td><td>Pryč</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak nahrávat schůzky?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ul>
+                            <li>Nahrávání spouští organizátor</li>
+                            <li>Všichni účastníci jsou upozorněni (červená indikace)</li>
+                            <li>Nahrávka se ukládá na OneDrive organizátora</li>
+                            <li>Lze spustit i přepis (transcription)</li>
+                        </ul>
+                        <div class="highlight">
+                            <strong>⚠️ DŮLEŽITÉ:</strong> Nastavte správný jazyk přepisu (čeština)!
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak zahájit hovor?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>3 způsoby:</strong></p>
+                        <ol>
+                            <li><strong>Z chatu:</strong> Klikněte na ikonu kamery (video) nebo telefonu (hlas) nahoře</li>
+                            <li><strong>Z kalendáře:</strong> Naplánovaná schůzka → "Připojit se"</li>
+                            <li><strong>Z profilu osoby:</strong> Kliknutí na jméno → ikona hovoru</li>
+                        </ol>
+                        <div class="tip">
+                            <strong>💡 TIP:</strong> Nemusíte vždy zapínat kameru - hlasový hovor stačí pro rychlou konzultaci.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak vypnout notifikace na mobilu při práci na PC?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>V mobilní aplikaci Teams:</p>
+                        <ol>
+                            <li>Nastavení → Oznámení</li>
+                            <li>Zapněte "Blokovat při aktivním stavu u počítače"</li>
+                        </ol>
+                        <p>Notifikace přijdou jen na mobil, když nejste aktivní na PC.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je urgentní mód?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pro urgentní zprávy můžete označit zprávu jako "důležitou".</p>
+                        <ul>
+                            <li>Posílá notifikace každé 2 minuty po dobu 20 minut</li>
+                            <li>Dokáže probít i režim "Nerušit" na mobilu</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 5: Outlook -->
+        <div class="faq-section" data-section="outlook">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📧 Outlook - Email</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jaká je kapacita schránky?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>50 GB na uživatele</strong> (pro vybrané role možné navýšení na 100 GB)</p>
+                        <div class="tip">
+                            <strong>💡 TIP:</strong> Používejte odkazy místo příloh - šetří kapacitu!
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Nový Outlook vs. Classic?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><strong>Outlook Classic</strong> - starší vzhled, bude postupně ukončován</li>
+                            <li><strong>Nový Outlook</strong> - moderní vzhled, podobný webu</li>
+                        </ul>
+                        <div class="tip">
+                            <strong>💡 DOPORUČENÍ:</strong> Přejděte na nový Outlook - budoucí rozvoj směřuje tam.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak posílat soubory?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Starý způsob:</strong> Příloha v emailu → více verzí, velké soubory</p>
+                        <p><strong>Nový způsob (doporučeno):</strong></p>
+                        <ol>
+                            <li>Uložte soubor na SharePoint/OneDrive</li>
+                            <li>Zkopírujte odkaz</li>
+                            <li>Vložte odkaz do emailu</li>
+                        </ol>
+                        <p><strong>Výhody:</strong> Menší mail, jedna aktuální verze, možnost společné práce</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co jsou rychlé reakce?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Místo psaní "Děkuji, beru na vědomí" můžete použít rychlou reakci (palec nahoru).</p>
+                        <p>Reakce vidí všichni v konverzaci.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co jsou Rychlé kroky?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Spojení více akcí do jednoho tlačítka.</p>
+                        <p><strong>Příklad "Zpracovat poptávku HR":</strong></p>
+                        <ul>
+                            <li>Přesunout do složky "Poptávky HR"</li>
+                            <li>Označit příznakem</li>
+                            <li>Přiřadit kategorii "HR"</li>
+                            <li>Přeposlat kolegovi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 6: Kalendář -->
+        <div class="faq-section" data-section="kalendar">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📅 Kalendář</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Je kalendář propojený s Teams?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ano.</strong> Kalendář Outlooku je plně propojený s kalendářem v Teams - schůzky se zobrazují na obou místech.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak přidat nového člena do opakované schůzky?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="highlight">
+                            <strong>⚠️ DŮLEŽITÉ:</strong> Nové členy přidávejte přímo do série jako organizátor (ne přeposíláním)!
+                        </div>
+                        <p>Pouhé přeposlání jedné instance může způsobit, že nový člen nebude dostávat změny celé série.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je soukromá schůzka?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Při sdílení kalendáře ostatní vidí pouze "Zaneprázdněn(a)" - nevidí název ani detaily.</p>
+                        <p><strong>Vhodné pro:</strong> lékaře, osobní věci, citlivá jednání</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je Plánovač (Scheduling Assistant)?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nástroj, který zobrazuje dostupnost všech pozvaných účastníků a doporučuje časy, kdy jsou všichni volní.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak nastavit pracovní lokaci (kancelář/home office)?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ol>
+                            <li>Klikněte na den v kalendáři</li>
+                            <li>Zvolte ikonu domečku nebo kanceláře</li>
+                            <li>Vyberte "Kancelář" nebo "Vzdáleně"</li>
+                        </ol>
+                        <p>Kolegové pak vidí, zda jste v kanceláři nebo pracujete z domova.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Může někdo plánovat schůzky za mě?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ano.</strong> Můžete povolit kolegovi (např. asistentce) vkládat schůzky do vašeho kalendáře:</p>
+                        <ol>
+                            <li>Kalendář → Pravé tlačítko → Sdílení → Oprávnění</li>
+                            <li>Přidejte osobu a nastavte "Může upravovat"</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 7: Přechod a migrace -->
+        <div class="faq-section" data-section="prechod">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🚀 Přechod a migrace</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Kdy probíhá přechod?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ul>
+                            <li><strong>Středa 5.2. od 15:00</strong> - začátek přepínání</li>
+                            <li><strong>Středa 10:00-11:00</strong> - mimořádné živé vysílání (poslední dotazy)</li>
+                            <li><strong>Středa - Neděle</strong> - přechodné období s Mail Storem</li>
+                            <li><strong>Od pondělí</strong> - plný provoz v novém Outlooku</li>
+                        </ul>
+                        <div class="highlight">
+                            <strong>⚠️ DŮLEŽITÉ:</strong> Dokončete klíčové aktivity v M-clientu do 14:45!
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co je Mail Store?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Dočasná schránka s archivem vaší pošty z M-clientu.</p>
+                        <ul>
+                            <li>Dostupná <strong>pouze ke čtení</strong> (read-only)</li>
+                            <li>Vidíte ji jako záložku v Outlooku (středa - neděle)</li>
+                            <li>Od pondělí se obsah přesune do běžné struktury složek</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Který Outlook používat?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>V přechodném období (únor) používejte <strong>Outlook Classic</strong> - je stabilnější pro migraci.</p>
+                        <ul>
+                            <li>Pokud máte oba Outloky, vyberte verzi "Classic"</li>
+                            <li>Najdete ho přes vyhledávání: napište "Outlook"</li>
+                            <li>Nový Outlook přijde později po ustálení</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co s mobilem?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kontakty a kalendář na mobilu se <strong>nepřenesou automaticky</strong>.</p>
+                        <ul>
+                            <li>IT oddělení vás bude kontaktovat ohledně nastavení</li>
+                            <li>Návod na instalaci Outlooku do mobilu je na intranetu</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 8: Časté otázky -->
+        <div class="faq-section" data-section="faq">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>❓ Časté otázky</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Smažou se mi nějaká data?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ne.</strong> Vše je archivováno, jen se přesouvá do nového prostředí.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Přenesou se moje emailové složky?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ano</strong>, bude se řešit individuálně. IT vás bude kontaktovat.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Přenesou se moje pravidla (Rules)?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ne</strong>, pravidla je třeba nastavit znovu v Outlooku.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Přenese se můj kalendář?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Ano</strong>, ale opakující se události je třeba založit znovu.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co když spadne internet?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Lokální kopie synchronizovaných souborů se dá upravovat offline. Po připojení se změny synchronizují.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co když zákazník nemá M365?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Může otevřít sdílený dokument přes prohlížeč bez vlastního účtu.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Co se stane s M-clientem?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>M-client přejde do režimu "pouze ke čtení". Budete mít přístup k archívu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 8: Podpora -->
+        <div class="faq-section" data-section="podpora">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🆘 Podpora a kontakty</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Kde hledat pomoc?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ol>
+                            <li><strong>Intranet:</strong> Sekce M365 - návody, záznamy, testy</li>
+                            <li><strong>ChatGPT asistent:</strong> Na intranetu v sekci M365 - odpovídá na dotazy</li>
+                            <li><strong>Email:</strong> <code>365@vitar.cz</code></li>
+                            <li><strong>Ambasadoři:</strong> Kolegové z vašeho oddělení vyškolení na M365</li>
+                            <li><strong>IT oddělení:</strong> Pro technické problémy</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekce 9: Tipy -->
+        <div class="faq-section" data-section="tipy">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>💡 Tipy pro úspěšný přechod</h2>
+                <span class="icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <h3>Jak zvládnout přechod?</h3>
+                        <span class="arrow">▶</span>
+                    </div>
+                    <div class="faq-answer">
+                        <ol>
+                            <li><strong>Buďte trpěliví</strong> - je to nový systém, učíme se všichni</li>
+                            <li><strong>Pomáhejte si navzájem</strong> - pokud něco víte, poraďte kolegům</li>
+                            <li><strong>Nebojte se ptát</strong> - žádná otázka není hloupá</li>
+                            <li><strong>Udržujte kalendář aktuální</strong> - pomáhá celé firmě</li>
+                            <li><strong>Zkoušejte nové funkce</strong> - nejlépe se naučíte praxí</li>
+                            <li><strong>Zapněte si upozornění</strong> - aby vám nic neuniklo</li>
+                            <li><strong>Preferujte odkazy před přílohami</strong> - šetří kapacitu</li>
+                            <li><strong>Synchronizujte jen to, s čím pracujete</strong> - méně je více</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>VITAR implementace Office365 | Verze 3.0 | 30. ledna 2026</p>
+            <p>Kontakt: 365@vitar.cz</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+            
+            // Toggle current section
+            header.classList.toggle('active');
+            content.classList.toggle('show');
+        }
+
+        function toggleAnswer(question) {
+            const answer = question.nextElementSibling;
+            const isActive = question.classList.contains('active');
+            
+            // Toggle current answer
+            question.classList.toggle('active');
+            answer.classList.toggle('show');
+        }
+
+        function searchFAQ() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('.faq-section');
+            
+            sections.forEach(section => {
+                const items = section.querySelectorAll('.faq-item');
+                let sectionHasMatch = false;
+                
+                items.forEach(item => {
+                    const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                    
+                    if (question.includes(input) || answer.includes(input)) {
+                        item.classList.remove('hidden');
+                        sectionHasMatch = true;
+                        
+                        // Auto-expand matching items when searching
+                        if (input.length > 2) {
+                            item.querySelector('.faq-question').classList.add('active');
+                            item.querySelector('.faq-answer').classList.add('show');
+                        }
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                // Show/hide entire section based on matches
+                if (sectionHasMatch || input === '') {
+                    section.classList.remove('hidden');
+                    if (input.length > 2 && sectionHasMatch) {
+                        section.querySelector('.section-header').classList.add('active');
+                        section.querySelector('.section-content').classList.add('show');
+                    }
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+            
+            // Reset all if search is empty
+            if (input === '') {
+                document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('show'));
+                document.querySelectorAll('.section-header').forEach(h => h.classList.remove('active'));
+                document.querySelectorAll('.section-content').forEach(c => c.classList.remove('show'));
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('hidden'));
+            }
+        }
+
+        // Open first section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                firstSection.classList.add('active');
+                firstSection.nextElementSibling.classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>
